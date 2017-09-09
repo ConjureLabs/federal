@@ -6,6 +6,7 @@
   "bugs": "https://github.com/ConjureLabs/federal/issues",
   "homepage": "https://github.com/ConjureLabs/federal",
   "scripts": {
+    "pretest": "npm run lint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "license": "MIT",
