@@ -6,7 +6,7 @@
   "bugs": "https://github.com/ConjureLabs/federal/issues",
   "homepage": "https://github.com/ConjureLabs/federal",
   "scripts": {
-    "build": "bash ./bash/npm/build.sh",
+    "build": "babel src --out-dir dist",
     "pretest": "bash ./bash/npm/lint.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -14,5 +14,10 @@
   "dependencies": {
     "prop-types": "^15.5.10",
     "react": "^15.6.1"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "babel-plugin-transform-react-jsx": "^6.24.1"
   }
 }
