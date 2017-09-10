@@ -105,11 +105,7 @@ function connect(selector = store => store) {
 }
 
 function prettyLog(label, data) {
-  console.log(`%c ${padRight(label, 16)}`, [
-    'color: #e4421e',
-    'font-style: italic',
-    'font-weight: bold'
-  ].join(';'), data);
+  console.log(`%c ${padRight(label, 16)}`, 'color: #e4421e; font-style: italic; font-weight: bold', data);
 }
 
 function padRight(label, len) {
