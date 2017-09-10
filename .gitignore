@@ -2,6 +2,5 @@
 .idea
 *.rdb
 node_modules
-npm-debug.log
-webpack-build.log
+*.log
 dist
