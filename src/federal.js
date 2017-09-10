@@ -105,7 +105,6 @@ function connect(selector = store => store) {
 }
 
 function prettyLog(label, data) {
-  // todo: make this compatible with non-chrome browsers
   console.log(`%c ${padRight(label, 16)}`, [
     'color: #e4421e',
     'font-style: italic',
