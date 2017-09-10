@@ -19,7 +19,7 @@ This example uses Federal to wrap a page content with a centralized state, and t
 #### components/Header/index.js
 
 ```jsx
-import { connect } from 'Federal';
+import { connect } from 'federal';
 
 const Header = ({ account }) => {
   return (
