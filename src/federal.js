@@ -113,10 +113,8 @@ function prettyLog(label, data) {
 }
 
 function padRight(label, len) {
-  if (label.length >= len) {
-    return label;
-  }
-  return `${label}${' '.repeat(len - label.length)}`;
+  return label.length >= len ? label :
+    `${label}${' '.repeat(len - label.length)}`;
 }
 
 export default Federal;
