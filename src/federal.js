@@ -124,4 +124,5 @@ function padRight(label, len) {
   return padRight(label + ' ', len);
 }
 
-export { Federal, connect };
+export default Federal;
+export { connect };
