@@ -9,7 +9,8 @@
     "build": "babel src --out-dir dist",
     "prepublish": "npm run build",
     "pretest": "bash ./bash/npm/lint.sh",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "lint": "bash ./bash/npm/lint.sh",
+    "test": "npm run lint"
   },
   "license": "MIT",
   "dependencies": {
