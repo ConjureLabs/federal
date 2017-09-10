@@ -177,3 +177,15 @@ const CountInteractions = ({ dispatch }) => {
 
 export default connect()(CountInteractions);
 ```
+
+### Action Callbacks
+
+Actions have an optional callback.
+
+```js
+dispatch.addToCount({
+  addition: 1
+}, () => {
+  // ...
+});
+```
