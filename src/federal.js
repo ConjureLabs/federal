@@ -1,4 +1,4 @@
-import { Component, Children, isValidElement } from 'react';
+import React, { Component, Children } from 'react';
 import PropTypes from 'prop-types';
 
 const problemMarker = {}; // marker used for invalid or unknown value, likely due to error
@@ -59,7 +59,7 @@ class Federal extends Component {
     const { children } = this.props;
 
     return !children ? null :
-      isValidElement(children) ? Children.only(children) :
+      React.isValidElement(children) ? Children.only(children) :
       Array.isArray(children) ? (
         <span>{children}</span>
       ) :
