@@ -116,7 +116,7 @@ function padRight(label, len) {
   if (label.length >= len) {
     return label;
   }
-  return padRight(label + ' ', len);
+  return `${label}${' '.repeat(len - label.length)}`;
 }
 
 export default Federal;
