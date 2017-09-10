@@ -1,6 +1,6 @@
 {
   "name": "federal",
-  "version": "0.0.1-alpha.2",
+  "version": "0.0.1-alpha.3",
   "description": "Minimalistic centralized React store",
   "main": "./dist/federal.js",
   "bugs": "https://github.com/ConjureLabs/federal/issues",
