@@ -72,7 +72,7 @@ class Federal extends Component {
   }
 }
 
-function connect(selector) {
+function connect(selector = store => store) {
   return function wrapper(InboundComponent) {
     class FederalWrap extends Component {
       render() {

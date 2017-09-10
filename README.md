@@ -14,6 +14,8 @@ Federal takes the 'less is more' approach. In any file that uses Federal, you si
 
 ### Simple Example
 
+This example uses Federal to wrap a page content with a centralized state, and then has a child component (`<Header />`) connect to the state, which allows it to render the user's name.
+
 #### components/Header/index.js
 
 ```jsx
@@ -25,18 +27,13 @@ const Header = ({ account }) => {
       <dl>
         <dt>User</dt>
         <dd>{account.name}</dd>
-      </dl>{account.name}
+      </dl>
     </header>
   );
 };
 
-const selector = store => {
-  return {
-    account: store.account
-  };
-};
-
-export default connect(selector)(Header);
+// using `connect()` will bind `<Header />` to the full state object
+export default connect()(Header);
 ```
 
 #### pages/dashboard/index.js
@@ -53,7 +50,7 @@ export default ({ account }) => {
 
   return (
     <Federal store={initialState}>
-      <div>Content...</div>
+      <Header />
     </Federal>
   );
 };
