@@ -10,7 +10,8 @@
     "prepublish": "npm run build",
     "pretest": "bash ./bash/npm/lint.sh",
     "lint": "bash ./bash/npm/lint.sh",
-    "test": "npm run lint"
+    "pretest": "npm run lint",
+    "test": "echo \"missing unit tests\"; exit 1;"
   },
   "license": "MIT",
   "dependencies": {
