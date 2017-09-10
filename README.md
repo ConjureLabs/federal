@@ -82,6 +82,8 @@ export default connect(selector)(Header);
 
 Adding actions allows you to dispatch a change to the central store. A dispatch will then ripple and update to any subscribed components.
 
+Actions must return a new object, or Federal will consider nothing to have changed.
+
 #### pages/dashboard/index.js
 
 ```jsx
