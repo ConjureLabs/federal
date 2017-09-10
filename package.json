@@ -7,6 +7,7 @@
   "homepage": "https://github.com/ConjureLabs/federal",
   "scripts": {
     "build": "babel src --out-dir dist",
+    "prepublish": "npm run build",
     "pretest": "bash ./bash/npm/lint.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
