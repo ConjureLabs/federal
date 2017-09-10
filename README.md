@@ -10,6 +10,12 @@ Redux is great, and is often the right choice. But, sometimes it adds too much c
 
 Federal takes the 'less is more' approach. In any file that uses Federal, you simply need to provide an intial store object, and an object of actions (e.g. `actions/index.js`). Then, you can `connect()` any component to the store, which will result in it receiving store `.props`, including `.props.dispatch` for each action method (e.g. `this.props.dispatch.setStatus('status')`).
 
+## Setup
+
+```bash
+npm install --save federal
+```
+
 ## Use
 
 ### Simple Example
