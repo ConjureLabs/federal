@@ -16,26 +16,6 @@ Federal takes the 'less is more' approach. In any file that uses Federal, you si
 
 This example uses Federal to wrap a page content with a centralized store, and then has a child component (`<Header />`) connect to the store, which allows it to render the user's name.
 
-#### components/Header/index.js
-
-```jsx
-import { connect } from 'federal';
-
-const Header = ({ account }) => {
-  return (
-    <header>
-      <dl>
-        <dt>User</dt>
-        <dd>{account.name}</dd>
-      </dl>
-    </header>
-  );
-};
-
-// using `connect()` will bind `<Header />` to the full store object
-export default connect()(Header);
-```
-
 #### pages/dashboard/index.js
 
 ```jsx
@@ -56,7 +36,27 @@ export default ({ account }) => {
 };
 ```
 
-### Using Selectors
+#### components/Header/index.js
+
+```jsx
+import { connect } from 'federal';
+
+const Header = ({ account }) => {
+  return (
+    <header>
+      <dl>
+        <dt>User</dt>
+        <dd>{account.name}</dd>
+      </dl>
+    </header>
+  );
+};
+
+// using `connect()` will bind `<Header />` to the full store object
+export default connect()(Header);
+```
+
+### Selectors
 
 Let's say the above example's `initialStore` changes to something like this:
 
@@ -76,4 +76,104 @@ const selector = store => {
 };
 
 export default connect(selector)(Header);
+```
+
+### Actions
+
+Adding actions allows you to dispatch a change to the central store. A dispatch will then ripple and update to any subscribed components.
+
+#### pages/dashboard/index.js
+
+```jsx
+import Federal from 'federal';
+import CountSummary from '../../components/CountSummary';
+import CountInteractions from '../../components/CountInteractions'
+import actions from './actions';
+
+export default () => {
+  const initialStore = {
+    count: 0
+  };
+
+  return (
+    <Federal store={initialStore} actions={actions}>
+      <CountSummary />
+      <CountInteractions />
+    </Federal>
+  );
+};
+```
+
+#### pages/dashboard/actions/index.js
+
+```js
+const resetCount = store => {
+  return Object.assign({}, store, {
+    count: 0
+  });
+};
+
+// second arg to each action is an object, that can be passed when dispatching
+const addToCount = (store, { addition }) => {
+  return Object.assign({}, store, {
+    count: store.count + addition
+  });
+};
+
+export default {
+  resetCount,
+  addToCount
+};
+```
+
+#### components/CountSummary/index.js
+
+```jsx
+import { connect } from 'federal';
+
+const CountSummary = ({ count }) => {
+  return (
+    <div>Current count is {count}</div>
+  );
+};
+
+export default connect()(CountSummary);
+```
+
+#### components/CountInteractions/index.js
+
+```jsx
+import { connect } from 'federal';
+
+// `connect()` passed a `dispatch` prop that exposes all actions to the component
+const CountInteractions = ({ dispatch }) => {
+  return (
+    <div>
+      <div>
+        <button
+          type='button'
+          onClick={() => {
+            dispatch.addToCount({
+              addition: 1 // can be modified to increment faster
+            });
+          }}
+        >
+          increment count
+        </button>
+      </div>
+      <div>
+        <button
+          type='button'
+          onClick={() => {
+            dispatch.resetCount();
+          }}
+        >
+          reset count
+        </button>
+      </div>
+    </div>
+  );
+};
+
+export default connect()(CountInteractions);
 ```
