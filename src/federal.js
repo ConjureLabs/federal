@@ -24,9 +24,11 @@ class Federal extends Component {
 
         state.store = newStore;
         this.setState(state, () => {
-          prettyLog('Prev Store', oldStore);
-          prettyLog('Federal Action', actionName);
-          prettyLog('Next Store', newStore);
+          if (process.env.NODE_ENV !== 'production') {
+            prettyLog('Prev Store', oldStore);
+            prettyLog('Federal Action', actionName);
+            prettyLog('Next Store', newStore);
+          }
 
           if (typeof callback === 'function') {
             callback(oldStore, newStore);
