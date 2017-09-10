@@ -79,6 +79,7 @@ class Federal extends Component {
 // method to 'connect'/bind a component to the Federal store
 function connect(selector = store => store) {
   return function wrapper(InboundComponent) {
+    // connecting a component wraps it with our own component, to enforce child contexts
     class FederalWrap extends Component {
       render() {
         const { store, dispatch } = this.context;
