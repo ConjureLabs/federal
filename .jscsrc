@@ -1,6 +1,5 @@
 {
-  "esnext": true,
-  "excludeFiles": [ "node_modules/**" ],
+  "excludeFiles": [ "node_modules/**", "dist/**" ],
   "disallowTrailingWhitespace": true,
   "requireLineFeedAtFileEnd": true,
   "disallowEmptyBlocks": true,

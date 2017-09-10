@@ -1,14 +1,9 @@
 {
   "parser": "babel-eslint",
-  "ecmaFeatures": {
-    "experimentalObjectRestSpread": true,
-    "jsx": false,
-    "modules": false
-  },
   "env": {
-    "browser": false,
+    "browser": true,
     "es6": true,
-    "node": true
+    "node": false
   },
   "rules": {
     "arrow-spacing": [2, {

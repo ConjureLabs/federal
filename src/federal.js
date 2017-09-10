@@ -59,7 +59,7 @@ class Federal extends Component {
     const { children } = this.props;
 
     return !children ? null :
-      React.isValidElement(children) ? Children.only(children) :
+      isValidElement(children) ? Children.only(children) :
       Array.isArray(children) ? (
         <span>{children}</span>
       ) :
