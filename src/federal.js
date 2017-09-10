@@ -42,12 +42,6 @@ class Federal extends Component {
     };
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.store !== this.store) {
-  //     throw new Error('Can not alter Federal.store data on the fly');
-  //   }
-  // }
-
   getChildContext() {
     return {
       store: this.state.store,
