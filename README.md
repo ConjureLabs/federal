@@ -66,7 +66,7 @@ export default connect()(Header);
 
 Let's say the above example's `initialStore` changes to something like this:
 
-```js
+```jsx
 const initialStore = {
   account,
   products,
@@ -114,7 +114,7 @@ export default () => {
 
 #### pages/dashboard/actions/index.js
 
-```js
+```jsx
 const resetCount = store => {
   return Object.assign({}, store, {
     count: 0
@@ -190,7 +190,7 @@ export default connect()(CountInteractions);
 
 Actions have an optional callback.
 
-```js
+```jsx
 dispatch.addToCount({
   addition: 1
 }, () => {
@@ -202,7 +202,7 @@ dispatch.addToCount({
 
 A component may have local actions, while `<Federal>` is rendered at a different level in the layout. You can append action handlers to the connected components.
 
-```js
+```jsx
 const removeFromCount = (store, { deduction }) => {
   return Object.assign({}, store, {
     count: store.count - deduction
