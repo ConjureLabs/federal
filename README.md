@@ -209,6 +209,7 @@ const removeFromCount = (store, { deduction }) => {
   });
 };
 
-// action .removeFromCount() added to CountSummary.props.dispatch, while still including all root-level actions
+// action .removeFromCount() added to CountSummary.props.dispatch,
+// while still including all root-level actions
 export default connect(state => state, { removeFromCount })(CountSummary);
 ```
