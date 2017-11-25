@@ -44,7 +44,7 @@ class Federal extends Component {
   static childContextTypes = {
     store: PropTypes.object.isRequired,
     dispatch: PropTypes.object.isRequired,
-    federalRoot: PropTypes.element
+    federalRoot: PropTypes.object.isRequired
   }
 }
 
@@ -85,7 +85,7 @@ function connect(selector = store => store, actions = {}) {
       static contextTypes = {
         store: PropTypes.object.isRequired,
         dispatch: PropTypes.object.isRequired,
-        federalRoot: PropTypes.element
+        federalRoot: PropTypes.object.isRequired
       }
     }
 
