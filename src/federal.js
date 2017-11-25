@@ -116,9 +116,7 @@ function actionsToDispatch(parent, actions) {
           prettyLog('Next Store', newStore);
         }
 
-        if (typeof callback === 'function') {
-          callback(oldStore, newStore);
-        }
+        callback(oldStore, newStore);
       });
     };
     return mapping;
