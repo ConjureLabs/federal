@@ -197,3 +197,18 @@ dispatch.addToCount({
   // ...
 });
 ```
+
+### Actions via `connect()`
+
+A component may have local actions, while `<Federal>` is rendered at a different level in the layout. You can append action handlers to the connected components.
+
+```js
+const removeFromCount = (store, { deduction }) => {
+  return Object.assign({}, store, {
+    count: store.count - deduction
+  });
+};
+
+// action .removeFromCount() added to CountSummary.props.dispatch, while still including all root-level actions
+export default connect(state => state, { removeFromCount })(CountSummary);
+```
