@@ -14,47 +14,18 @@ class Federal extends Component {
       actions: {}
     }, props);
 
-    // building disptach methods, based on provided action methods
-    const dispatch = Object.keys(actions).reduce((mapping, actionName) => {
-      // e.g. dispatch.setVal = ({ newVal: 12 }, () => { /* callback */ })
-      mapping[actionName] = (data, callback) => {
-        const state = this.state;
-        const oldStore = state.store;
-        const newStore = actions[actionName](oldStore, data);
-
-        // store value must change, or nothing is triggered
-        if (newStore === oldStore) {
-          return;
-        }
-
-        // state.store update will trigger children bound to context to update
-        state.store = newStore;
-        this.setState(state, () => {
-          if (process.env.NODE_ENV !== 'production') {
-            prettyLog('Prev Store', oldStore);
-            prettyLog('Federal Action', actionName);
-            prettyLog('Next Store', newStore);
-          }
-
-          if (typeof callback === 'function') {
-            callback(oldStore, newStore);
-          }
-        });
-      };
-      return mapping;
-    }, {});
-
     // initial state
     this.state = {
       store,
-      dispatch
+      dispatch: actionsToDispatch(this, actions)
     };
   }
 
   getChildContext() {
     return {
       store: this.state.store,
-      dispatch: this.state.dispatch
+      dispatch: this.state.dispatch,
+      federalRoot: this
     };
   }
 
@@ -72,17 +43,18 @@ class Federal extends Component {
   // contextTypes needed or else context is not exposed
   static childContextTypes = {
     store: PropTypes.object.isRequired,
-    dispatch: PropTypes.object.isRequired
+    dispatch: PropTypes.object.isRequired,
+    federalRoot: PropTypes.element
   }
 }
 
 // method to 'connect'/bind a component to the Federal store
-function connect(selector = store => store) {
+function connect(selector = store => store, actions = {}) {
   return function wrapper(InboundComponent) {
     // connecting a component wraps it with our own component, to enforce child contexts
     class FederalWrap extends Component {
       render() {
-        const { store, dispatch } = this.context;
+        const { store, dispatch, federalRoot } = this.context;
 
         // select will be used to reduce the number of props passed to the inbound component
         const storeSelected = typeof selector === 'function' ? selector(store) :
@@ -95,9 +67,12 @@ function connect(selector = store => store) {
           throw new Error(`An invalid selector was passed to connect() for ${InboundComponent.displayName}`);
         }
 
+        // dispatch may hav inherited or local actions
+        const usedDispatch = Object.assign({}, dispatch, actionsToDispatch(federalRoot, actions));
+
         // props passed manually will override those in the store
         const usedProps = Object.assign({
-          dispatch
+          dispatch: usedDispatch
         }, storeSelected, this.props);
 
         // inbound component returned with overridden props, from the (selected) store
@@ -109,12 +84,45 @@ function connect(selector = store => store) {
       // contextTypes needed or else context is not exposed
       static contextTypes = {
         store: PropTypes.object.isRequired,
-        dispatch: PropTypes.object.isRequired
+        dispatch: PropTypes.object.isRequired,
+        federalRoot: PropTypes.element
       }
     }
 
     return FederalWrap;
   };
+}
+
+function actionsToDispatch(parent, actions) {
+  // building disptach methods, based on provided action methods
+  return Object.keys(actions).reduce((mapping, actionName) => {
+    // e.g. dispatch.setVal = ({ newVal: 12 }, () => { /* callback */ })
+    mapping[actionName] = (data, callback = (() => {})) => {
+      const state = parent.state;
+      const oldStore = state.store;
+      const newStore = actions[actionName](oldStore, data);
+
+      // store value must change, or nothing is triggered
+      if (newStore === oldStore) {
+        return;
+      }
+
+      // state.store update will trigger children bound to context to update
+      state.store = newStore;
+      parent.setState(state, () => {
+        if (process.env.NODE_ENV !== 'production') {
+          prettyLog('Prev Store', oldStore);
+          prettyLog('Federal Action', actionName);
+          prettyLog('Next Store', newStore);
+        }
+
+        if (typeof callback === 'function') {
+          callback(oldStore, newStore);
+        }
+      });
+    };
+    return mapping;
+  }, {});
 }
 
 function prettyLog(label, data) {
