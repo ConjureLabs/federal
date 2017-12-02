@@ -58,9 +58,7 @@ function connect(selector = store => store, actions = {}) {
 
         // select will be used to reduce the number of props passed to the inbound component
         const storeSelected = typeof selector === 'function' ? selector(store) :
-          Array.isArray(selector) ? selector.reduce((selection, currentSelector) => {
-            return currentSelector(selection);
-          }, store) :
+          Array.isArray(selector) ? selector.reduce((selection, currentSelector) => currentSelector(selection), store) :
           problemMarker;
 
         if (storeSelected === problemMarker) {
@@ -93,11 +91,12 @@ function connect(selector = store => store, actions = {}) {
   };
 }
 
+const noOp = () => {};
 function actionsToDispatch(parent, actions) {
   // building disptach methods, based on provided action methods
   return Object.keys(actions).reduce((mapping, actionName) => {
     // e.g. dispatch.setVal = ({ newVal: 12 }, () => { /* callback */ })
-    mapping[actionName] = (data, callback = (() => {})) => {
+    mapping[actionName] = (data, callback = noOp) => {
       const state = parent.state;
       const oldStore = state.store;
       const newStore = actions[actionName](oldStore, data);
@@ -128,8 +127,7 @@ function prettyLog(label, data) {
 }
 
 function padRight(label, len) {
-  return label.length >= len ? label :
-    `${label}${' '.repeat(len - label.length)}`;
+  return label.length >= len ? label : `${label}${' '.repeat(len - label.length)}`;
 }
 
 export default Federal;
