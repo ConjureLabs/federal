@@ -47,16 +47,14 @@ export default ({ account }) => {
 ```jsx
 import { connect } from 'federal';
 
-const Header = ({ account }) => {
-  return (
-    <header>
-      <dl>
-        <dt>User</dt>
-        <dd>{account.name}</dd>
-      </dl>
-    </header>
-  );
-};
+const Header = ({ account }) => (
+  <header>
+    <dl>
+      <dt>User</dt>
+      <dd>{account.name}</dd>
+    </dl>
+  </header>
+);
 
 // using `connect()` will bind `<Header />` to the full store object
 export default connect()(Header);
@@ -66,7 +64,7 @@ export default connect()(Header);
 
 Let's say the above example's `initialStore` changes to something like this:
 
-```js
+```jsx
 const initialStore = {
   account,
   products,
@@ -77,9 +75,9 @@ const initialStore = {
 In this case, you don't want or need `products` or `notices` in order to render `<Header />`. You can use a selector to minimize the scope of the store changes passed to a component. Selectors are passed to `connect()`.
 
 ```jsx
-const selector = store => {
+const selector = store => ({
   account: store.account
-};
+});
 
 export default connect(selector)(Header);
 ```
@@ -114,7 +112,7 @@ export default () => {
 
 #### pages/dashboard/actions/index.js
 
-```js
+```jsx
 const resetCount = store => {
   return Object.assign({}, store, {
     count: 0
@@ -139,11 +137,9 @@ export default {
 ```jsx
 import { connect } from 'federal';
 
-const CountSummary = ({ count }) => {
-  return (
-    <div>Current count is {count}</div>
-  );
-};
+const CountSummary = ({ count }) => (
+  <div>Current count is {count}</div>
+);
 
 export default connect()(CountSummary);
 ```
@@ -154,34 +150,32 @@ export default connect()(CountSummary);
 import { connect } from 'federal';
 
 // `connect()` passed a `dispatch` prop that exposes all actions to the component
-const CountInteractions = ({ dispatch }) => {
-  return (
+const CountInteractions = ({ dispatch }) => (
+  <div>
     <div>
-      <div>
-        <button
-          type='button'
-          onClick={() => {
-            dispatch.addToCount({
-              addition: 1 // can be modified to increment faster
-            });
-          }}
-        >
-          increment count
-        </button>
-      </div>
-      <div>
-        <button
-          type='button'
-          onClick={() => {
-            dispatch.resetCount();
-          }}
-        >
-          reset count
-        </button>
-      </div>
+      <button
+        type='button'
+        onClick={() => {
+          dispatch.addToCount({
+            addition: 1 // can be modified to increment faster
+          });
+        }}
+      >
+        increment count
+      </button>
     </div>
-  );
-};
+    <div>
+      <button
+        type='button'
+        onClick={() => {
+          dispatch.resetCount();
+        }}
+      >
+        reset count
+      </button>
+    </div>
+  </div>
+);
 
 export default connect()(CountInteractions);
 ```
@@ -190,7 +184,7 @@ export default connect()(CountInteractions);
 
 Actions have an optional callback.
 
-```js
+```jsx
 dispatch.addToCount({
   addition: 1
 }, () => {
@@ -202,7 +196,7 @@ dispatch.addToCount({
 
 A component may have local actions, while `<Federal>` is rendered at a different level in the layout. You can append action handlers to the connected components.
 
-```js
+```jsx
 const removeFromCount = (store, { deduction }) => {
   return Object.assign({}, store, {
     count: store.count - deduction
