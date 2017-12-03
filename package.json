@@ -34,5 +34,8 @@
     "babel-preset-stage-0": "^6.24.1",
     "eslint": "^4.6.1",
     "jscs": "^3.0.7"
+  },
+  "peerDependencies": {
+    "react": "^16.0.0"
   }
 }
