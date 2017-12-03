@@ -1,6 +1,6 @@
 {
   "name": "federal",
-  "version": "0.0.1-alpha.6",
+  "version": "0.0.1-alpha.7",
   "description": "Minimalistic centralized React store",
   "main": "./dist/federal.js",
   "bugs": "https://github.com/ConjureLabs/federal/issues",
@@ -8,9 +8,8 @@
   "scripts": {
     "build": "babel src --out-dir dist",
     "prepublish": "npm run build",
-    "pretest": "bash ./bash/npm/lint.sh",
-    "lint": "bash ./bash/npm/lint.sh",
     "pretest": "npm run lint",
+    "lint": "bash ./bash/npm/lint.sh",
     "test": "echo \"missing unit tests\"; exit 1;"
   },
   "license": "MIT",
@@ -18,8 +17,8 @@
     "dist"
   ],
   "dependencies": {
-    "prop-types": "^15.5.10",
-    "react": "^15.6.1"
+    "prop-types": "15.6.0",
+    "react": "16.2.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
