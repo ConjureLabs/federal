@@ -28,7 +28,7 @@ test('connect() should carry down store attributes', t => {
     c: 'z'
   };
 
-  const ConnectedChild = connect(store => store)(
+  const ConnectedChild = connect()(
     ({ a, b, c }) => (<div id='child'>{c}{b}{a}</div>)
   );
 
@@ -39,4 +39,28 @@ test('connect() should carry down store attributes', t => {
   );
 
   t.true(content.find('#child').text() === 'zyx');
+});
+
+test('connect() should honor a selector', t => {
+  const initialStore = {
+    a: 'x',
+    b: 'y',
+    c: 'z'
+  };
+
+  const ConnectedChild = connect(store => ({
+    a: store.a,
+    // no .b
+    c: store.c
+  }))(
+    ({ a, b, c }) => (<div id='child'>{c || '-'}{b || '-'}{a || '-'}</div>)
+  );
+
+  const content = mount(
+    <Federal store={initialStore}>
+      <ConnectedChild />
+    </Federal>
+  );
+
+  t.true(content.find('#child').text() === 'z-x');
 });
