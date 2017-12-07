@@ -4,6 +4,7 @@ import React, { Component } from 'react';
 import { test } from 'ava';
 import Enzyme, { shallow, mount, render } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
+import sinon from 'sinon';
 
 import Federal, { connect } from '../dist/federal';
 
@@ -63,4 +64,54 @@ test('connect() should honor a selector', t => {
   );
 
   t.true(content.find('#child').text() === 'z-x');
+});
+
+test('connect() should pass action dispatchers', t => {
+  const onClick = sinon.spy();
+
+  const Child = ({ dispatch, count }) => (
+    <div>
+      <a
+        id='anchor'
+        href=''
+        onClick={e => {
+          e.preventDefault();
+          dispatch.increment();
+        }}
+      >link</a>
+
+      <span id='track'>{count}</span>
+    </div>
+  );
+
+  const ConnectedChild = connect()(Child);
+
+  const initialStore = {
+    count: 0
+  };
+
+  const actions = {
+    increment: store => {
+      return Object.assign({}, store, {
+        count: store.count + 1
+      });
+    }
+  };
+
+  const content = mount(
+    <Federal store={initialStore} actions={actions}>
+      <ConnectedChild />
+    </Federal>
+  );
+
+
+  t.true(content.find('#track').text() === '0');
+
+  content.find('#anchor').simulate('click');
+  t.true(content.find('#track').text() === '1');
+
+  content.find('#anchor').simulate('click');
+  content.find('#anchor').simulate('click');
+  content.find('#anchor').simulate('click');
+  t.true(content.find('#track').text() === '4');
 });

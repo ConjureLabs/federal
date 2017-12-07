@@ -109,7 +109,7 @@ function actionsToDispatch(parent, actions) {
       // state.store update will trigger children bound to context to update
       state.store = newStore;
       parent.setState(state, () => {
-        if (process.env.NODE_ENV !== 'production') {
+        if (process.env.NODE_ENV !== 'production' && process.env.NODE_ENV !== 'test') {
           prettyLog('Prev Store', oldStore);
           prettyLog('Federal Action', actionName);
           prettyLog('Next Store', newStore);

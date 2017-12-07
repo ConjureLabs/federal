@@ -10,7 +10,7 @@
     "prepublish": "npm run build",
     "pretest": "npm run lint",
     "lint": "bash ./bash/npm/lint.sh",
-    "test": "ava test"
+    "test": "NODE_ENV=test ava test"
   },
   "license": "MIT",
   "files": [
@@ -40,7 +40,8 @@
     "jscs": "^3.0.7",
     "jsdom": "11.5.1",
     "jsdom-global": "3.0.2",
-    "react-dom": "16.2.0"
+    "react-dom": "16.2.0",
+    "sinon": "4.1.3"
   },
   "peerDependencies": {
     "react": "^16.0.0"
