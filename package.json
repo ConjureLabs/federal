@@ -38,6 +38,8 @@
     "enzyme-adapter-react-16": "1.1.0",
     "eslint": "^4.6.1",
     "jscs": "^3.0.7",
+    "jsdom": "11.5.1",
+    "jsdom-global": "3.0.2",
     "react-dom": "16.2.0"
   },
   "peerDependencies": {
