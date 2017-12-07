@@ -1,0 +1,15 @@
+# IDEs
+.idea
+
+# dependencies
+node_modules
+package-lock.json
+
+# logs
+*.log
+
+# OS
+.DS_Store
+
+# Next
+.next
