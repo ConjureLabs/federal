@@ -104,7 +104,6 @@ test('connect() should pass action dispatchers', t => {
     </Federal>
   );
 
-
   t.true(content.find('#track').text() === '0');
 
   content.find('#anchor').simulate('click');
@@ -114,4 +113,54 @@ test('connect() should pass action dispatchers', t => {
   content.find('#anchor').simulate('click');
   content.find('#anchor').simulate('click');
   t.true(content.find('#track').text() === '4');
+});
+
+test('connect() should allow custom actions', t => {
+  const onClick = sinon.spy();
+
+  const actions = {
+    increment: store => {
+      return Object.assign({}, store, {
+        count: store.count + 1
+      });
+    }
+  };
+
+  const Child = ({ dispatch, count }) => (
+    <div>
+      <a
+        id='anchor'
+        href=''
+        onClick={e => {
+          e.preventDefault();
+          dispatch.increment();
+        }}
+      >link</a>
+
+      <span id='track'>{count}</span>
+    </div>
+  );
+
+  const ConnectedChild = connect(store => store, actions)(Child);
+
+  const initialStore = {
+    count: 0
+  };
+
+  const content = mount(
+    <Federal store={initialStore}>
+      <ConnectedChild />
+    </Federal>
+  );
+
+  t.true(content.find('#track').text() === '0');
+
+  content.find('#anchor').simulate('click');
+  content.find('#anchor').simulate('click');
+  t.true(content.find('#track').text() === '2');
+
+  content.find('#anchor').simulate('click');
+  content.find('#anchor').simulate('click');
+  content.find('#anchor').simulate('click');
+  t.true(content.find('#track').text() === '5');
 });
