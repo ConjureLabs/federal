@@ -1,29 +1,29 @@
-import React, { Component } from 'react';
-import { connect } from 'federal';
+import React, { Component } from 'react'
+import { connect } from 'federal'
 
-import actions from './actions';
+import actions from './actions'
 
 class AddForm extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
-    this.input = null; // will be set to input ref
+    this.input = null // will be set to input ref
   }
 
   submit() {
-    const val = this.input.value.trim();
+    const val = this.input.value.trim()
 
     if (!val) {
-      return;
+      return
     }
 
-    const { dispatch } = this.props;
+    const { dispatch } = this.props
 
     dispatch.addItem({
       addition: val
     }, () => {
-      this.input.value = '';
-    });
+      this.input.value = ''
+    })
   }
 
   render() {
@@ -37,19 +37,19 @@ class AddForm extends Component {
         <a
           href=''
           onClick={e => {
-            e.preventDefault();
-            this.submit();
+            e.preventDefault()
+            this.submit()
           }}
         >
           Add New Item
         </a>
       </div>
-    );
+    )
   }
 }
 
 const selector = store => ({
   items: store.items
-});
+})
 
-export default connect(selector, actions)(AddForm);
+export default connect(selector, actions)(AddForm)

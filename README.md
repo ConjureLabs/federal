@@ -29,27 +29,27 @@ This example uses Federal to wrap a page content with a centralized store, and t
 #### pages/dashboard/index.js
 
 ```jsx
-import Federal from 'federal';
-import Header from '../../components/Header';
+import Federal from 'federal'
+import Header from '../../components/Header'
 
 // assume `account` is passed in as a prop
 export default ({ account }) => {
   const initialStore = {
     account
-  };
+  }
 
   return (
     <Federal store={initialStore}>
       <Header />
     </Federal>
-  );
-};
+  )
+}
 ```
 
 #### components/Header/index.js
 
 ```jsx
-import { connect } from 'federal';
+import { connect } from 'federal'
 
 const Header = ({ account }) => (
   <header>
@@ -58,10 +58,10 @@ const Header = ({ account }) => (
       <dd>{account.name}</dd>
     </dl>
   </header>
-);
+)
 
 // using `connect()` will bind `<Header />` to the full store object
-export default connect()(Header);
+export default connect()(Header)
 ```
 
 ### Selectors
@@ -73,7 +73,7 @@ const initialStore = {
   account,
   products,
   notices
-};
+}
 ```
 
 In this case, you don't want or need `products` or `notices` in order to render `<Header />`. You can use a selector to minimize the scope of the store changes passed to a component. Selectors are passed to `connect()`.
@@ -81,9 +81,9 @@ In this case, you don't want or need `products` or `notices` in order to render 
 ```jsx
 const selector = store => ({
   account: store.account
-});
+})
 
-export default connect(selector)(Header);
+export default connect(selector)(Header)
 ```
 
 ### Actions
@@ -95,23 +95,23 @@ Actions must return a new object, or Federal will consider nothing to have chang
 #### pages/dashboard/index.js
 
 ```jsx
-import Federal from 'federal';
-import CountSummary from '../../components/CountSummary';
+import Federal from 'federal'
+import CountSummary from '../../components/CountSummary'
 import CountInteractions from '../../components/CountInteractions'
-import actions from './actions';
+import actions from './actions'
 
 export default () => {
   const initialStore = {
     count: 0
-  };
+  }
 
   return (
     <Federal store={initialStore} actions={actions}>
       <CountSummary />
       <CountInteractions />
     </Federal>
-  );
-};
+  )
+}
 ```
 
 #### pages/dashboard/actions/index.js
@@ -120,38 +120,38 @@ export default () => {
 const resetCount = store => {
   return Object.assign({}, store, {
     count: 0
-  });
-};
+  })
+}
 
 // second arg to each action is an object, that can be passed when dispatching
 const addToCount = (store, { addition }) => {
   return Object.assign({}, store, {
     count: store.count + addition
-  });
-};
+  })
+}
 
 export default {
   resetCount,
   addToCount
-};
+}
 ```
 
 #### components/CountSummary/index.js
 
 ```jsx
-import { connect } from 'federal';
+import { connect } from 'federal'
 
 const CountSummary = ({ count }) => (
   <div>Current count is {count}</div>
-);
+)
 
-export default connect()(CountSummary);
+export default connect()(CountSummary)
 ```
 
 #### components/CountInteractions/index.js
 
 ```jsx
-import { connect } from 'federal';
+import { connect } from 'federal'
 
 // `connect()` passed a `dispatch` prop that exposes all actions to the component
 const CountInteractions = ({ dispatch }) => (
@@ -162,7 +162,7 @@ const CountInteractions = ({ dispatch }) => (
         onClick={() => {
           dispatch.addToCount({
             addition: 1 // can be modified to increment faster
-          });
+          })
         }}
       >
         increment count
@@ -172,16 +172,16 @@ const CountInteractions = ({ dispatch }) => (
       <button
         type='button'
         onClick={() => {
-          dispatch.resetCount();
+          dispatch.resetCount()
         }}
       >
         reset count
       </button>
     </div>
   </div>
-);
+)
 
-export default connect()(CountInteractions);
+export default connect()(CountInteractions)
 ```
 
 ### Action Callbacks
@@ -193,7 +193,7 @@ dispatch.addToCount({
   addition: 1
 }, () => {
   // ...
-});
+})
 ```
 
 ### Actions via `connect()`
@@ -204,10 +204,10 @@ A component may have local actions, while `<Federal>` is rendered at a different
 const removeFromCount = (store, { deduction }) => {
   return Object.assign({}, store, {
     count: store.count - deduction
-  });
-};
+  })
+}
 
 // action .removeFromCount() added to CountSummary.props.dispatch,
 // while still including all root-level actions
-export default connect(state => state, { removeFromCount })(CountSummary);
+export default connect(state => state, { removeFromCount })(CountSummary)
 ```

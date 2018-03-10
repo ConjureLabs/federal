@@ -1,7 +1,7 @@
-import React from 'react'; // make next errors go away
-import Federal, { connect } from 'federal';
+import React from 'react' // make next errors go away
+import Federal, { connect } from 'federal'
 
-import AddForm from '../components/AddForm';
+import AddForm from '../components/AddForm'
 
 const Page = ({ items }) => (
   <div>
@@ -15,26 +15,28 @@ const Page = ({ items }) => (
 
     <AddForm />
 
-    <style jsx="true">{`
-      h1 {
-        font-size: 26px;
-        color: blue;
-        display: block;
-        margin-bottom: 26px;
-      }
-    `}</style>
+    <style jsx='true'>
+      {`
+        h1 {
+          font-size: 26px;
+          color: blue;
+          display: block;
+          margin-bottom: 26px;
+        }
+      `}
+    </style>
   </div>
 );
 
 const selector = store => ({
   items: store.items
-});
+})
 
-const ConnectedPage = connect(selector)(Page);
+const ConnectedPage = connect(selector)(Page)
 
 const initialStore = {
   items: ['Apples', 'Bananas']
-};
+}
 
 export default () => (
   <Federal store={initialStore}>
