@@ -1,10 +1,11 @@
 {
-  "name": "federal",
-  "version": "0.0.2",
+  "name": "@conjurelabs/federal",
+  "version": "0.0.3",
   "description": "Minimalistic centralized React store",
   "main": "./dist/federal.js",
   "bugs": "https://github.com/ConjureLabs/federal/issues",
   "homepage": "https://github.com/ConjureLabs/federal",
+  "repository": "ConjureLabs/federal",
   "scripts": {
     "build": "babel src --out-dir dist",
     "prepublish": "npm run build",
@@ -16,11 +17,6 @@
   "files": [
     "dist"
   ],
-  "dependencies": {
-    "next": "4.2.3",
-    "prop-types": "15.6.0",
-    "react": "16.2.0"
-  },
   "devDependencies": {
     "ava": "0.24.0",
     "babel-cli": "^6.26.0",
@@ -41,6 +37,8 @@
     "jscs": "^3.0.7",
     "jsdom": "11.5.1",
     "jsdom-global": "3.0.2",
+    "prop-types": "15.6.0",
+    "react": "16.2.0",
     "react-dom": "16.2.0",
     "sinon": "4.1.3"
   },
