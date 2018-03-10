@@ -17,7 +17,13 @@ Of course! It's currently being used, in production, on [Conjure](https://conjur
 ## Setup
 
 ```bash
-npm install --save federal
+npm install --save @conjurelabs/federal
+```
+
+or
+
+```bash
+yarn add @conjurelabs/federal
 ```
 
 ## Use
@@ -29,7 +35,7 @@ This example uses Federal to wrap a page content with a centralized store, and t
 #### pages/dashboard/index.js
 
 ```jsx
-import Federal from 'federal'
+import Federal from '@conjurelabs/federal'
 import Header from '../../components/Header'
 
 // assume `account` is passed in as a prop
@@ -49,7 +55,7 @@ export default ({ account }) => {
 #### components/Header/index.js
 
 ```jsx
-import { connect } from 'federal'
+import { connect } from '@conjurelabs/federal'
 
 const Header = ({ account }) => (
   <header>
@@ -95,7 +101,7 @@ Actions must return a new object, or Federal will consider nothing to have chang
 #### pages/dashboard/index.js
 
 ```jsx
-import Federal from 'federal'
+import Federal from '@conjurelabs/federal'
 import CountSummary from '../../components/CountSummary'
 import CountInteractions from '../../components/CountInteractions'
 import actions from './actions'
@@ -139,7 +145,7 @@ export default {
 #### components/CountSummary/index.js
 
 ```jsx
-import { connect } from 'federal'
+import { connect } from '@conjurelabs/federal'
 
 const CountSummary = ({ count }) => (
   <div>Current count is {count}</div>
@@ -151,7 +157,7 @@ export default connect()(CountSummary)
 #### components/CountInteractions/index.js
 
 ```jsx
-import { connect } from 'federal'
+import { connect } from '@conjurelabs/federal'
 
 // `connect()` passed a `dispatch` prop that exposes all actions to the component
 const CountInteractions = ({ dispatch }) => (
